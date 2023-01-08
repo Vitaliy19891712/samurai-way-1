@@ -9,26 +9,3 @@
   max-width: 1200px;
   margin: 0 auto;
 }
-
-.content {
-  grid-area: c;
-}
-
-.header {
-  grid-area: h;
-  background-color: aquamarine;
-}
-
-.header img {
-  height: 100%;
-}
-
-.nav {
-  grid-area: n;
-  background-color: blueviolet;
-}
-
-.content img {
-  width: 100%;
-  max-height: 200px;
-}
