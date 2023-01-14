@@ -5,10 +5,12 @@ import React from "react";
 export function MyPosts() {
   return (
     <div className={s.item}>
-      My post
+      <h2>My post</h2>
       <div>
         <textarea></textarea>
-        <button>Кнопка</button>
+        <div>
+          <button>Кнопка</button>
+        </div>
       </div>
       <div className={s.posts}>
         <Post message="Hello" likeCount={17} />
