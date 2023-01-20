@@ -4,6 +4,7 @@ import React from "react";
 type PostProp = {
   message: string;
   likeCount: number;
+  id: string
 };
 
 export function Post(props: PostProp) {

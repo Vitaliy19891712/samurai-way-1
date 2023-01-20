@@ -1,0 +1,7 @@
+.grid {
+  display: flex;
+  flex-direction: column;
+}
+.foto {
+  max-width: 30px;
+}

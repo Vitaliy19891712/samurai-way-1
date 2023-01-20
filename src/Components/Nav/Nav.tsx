@@ -1,7 +1,12 @@
 import { NavLink } from "react-router-dom";
+import { DialogType } from "../../App";
+import Sidebar from "../Sidebar/Sidebar";
 import s from "./Nav.module.css";
 
-export function Navbar() {
+export type NavbarPropsType = {
+  ikons: Array<DialogType>;
+};
+export function Navbar(props: NavbarPropsType) {
   return (
     <nav className="nav">
       <div>
@@ -40,6 +45,9 @@ export function Navbar() {
         >
           Settings{" "}
         </NavLink>
+      </div>
+      <div>
+        <Sidebar ikons={props.ikons}/>
       </div>
     </nav>
   );

@@ -2,7 +2,13 @@ import s from "./MyPosts.module.css";
 import { Post } from "./Post/Post";
 import React from "react";
 
-export function MyPosts() {
+import { ProfilePropsType } from "../Profile";
+
+export function MyPosts(props: ProfilePropsType) {
+  let postDate = props.posts.map((pd) => (
+    <Post message={pd.messages} likeCount={pd.likeCount} id={pd.id} />
+  ));
+
   return (
     <div className={s.item}>
       <h2>My post</h2>
@@ -12,11 +18,7 @@ export function MyPosts() {
           <button>Кнопка</button>
         </div>
       </div>
-      <div className={s.posts}>
-        <Post message="Hello" likeCount={17} />
-        <Post message="How are you" likeCount={45} />
-        <Post message="What sre you doing" likeCount={67} />
-      </div>
+      <div className={s.posts}>{postDate}</div>
     </div>
   );
 }
