@@ -18,11 +18,21 @@ export type statePropsType = {
     };
     sidebar: { dialogsData: Array<DialogType> };
   };
+  addPost: (message: string) => void;
+};
+
+export type stateType = {
+  profilePage: { posts: Array<PostType> };
+  messagePage: {
+    messagesData: Array<MessageType>;
+    dialogsData: Array<DialogType>;
+  };
+  sidebar: { dialogsData: Array<DialogType> };
 };
 
 export type PostType = {
   id: string;
-  messages: string;
+  message: string;
   likeCount: number;
 };
 
@@ -47,8 +57,9 @@ function App(props: statePropsType) {
         {/* <Profile /> */}
         <div className="app-wrapper-content">
           <Route
+            
             path="/profile"
-            render={() => <Profile posts={props.state.profilePage.posts} />}
+            render={() => <Profile posts={props.state.profilePage.posts} addPost = {props.addPost}/>}
           />
           <Route
             path="/dialogs"

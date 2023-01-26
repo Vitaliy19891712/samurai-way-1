@@ -17,10 +17,20 @@ function Dialogs(props: DialogsPropsType) {
     <Message messages={m.messages} id={m.id} sender={m.sender} />
   ));
 
+  let newMessageElement: any = React.createRef();
+
+  let addMessage = () => {
+    alert(newMessageElement.current.value);
+  };
+
   return (
-    <div className={s.dialogs}>
-      <div className={s.dialogs_items}>{dialogies}</div>
-      <div className={s.messages}>{messagies}</div>
+    <div>
+      <div className={s.dialogs}>
+        <div className={s.dialogs_items}>{dialogies}</div>
+        <div className={s.messages}>{messagies}</div>
+      </div>
+      <textarea ref={newMessageElement}></textarea>
+      <button onClick={addMessage}>Отправить</button>
     </div>
   );
 }

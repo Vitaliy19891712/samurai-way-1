@@ -1,11 +1,14 @@
-let state = {
+import { PostType, stateType } from "../App";
+import { rerenderEntireTree } from "../render";
+
+let state: stateType = {
   profilePage: {
     posts: [
-      { id: "1", messages: "Hello", likeCount: 17 },
-      { id: "2", messages: "How are you", likeCount: 45 },
+      { id: "1", message: "Hello", likeCount: 17 },
+      { id: "2", message: "How are you", likeCount: 45 },
       {
         id: "3",
-        messages: "What are you doing",
+        message: "What are you doing",
         likeCount: 67,
       },
     ],
@@ -84,4 +87,16 @@ let state = {
     ],
   },
 };
+
+export let addPost = (postMessage: string) => {
+  let newPost: PostType = {
+    id: "5",
+    message: postMessage,
+    likeCount: 0,
+  };
+
+  state.profilePage.posts.push(newPost);
+  rerenderEntireTree(state);
+};
+
 export default state;
