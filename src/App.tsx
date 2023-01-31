@@ -9,25 +9,30 @@ import News from "./Components/News/News";
 import { Profile } from "./Components/Profile/Profile";
 import Settings from "./Components/Settings/Settings";
 
-export type statePropsType = {
-  state: {
-    profilePage: { posts: Array<PostType> };
-    messagePage: {
-      messagesData: Array<MessageType>;
-      dialogsData: Array<DialogType>;
-    };
-    sidebar: { dialogsData: Array<DialogType> };
-  };
-  addPost: (message: string) => void;
+export type StatePropsType = {
+  state: StateType;
+  addPost: () => void;
+  updateNewPostYext: (text: string) => void;
 };
 
-export type stateType = {
-  profilePage: { posts: Array<PostType> };
-  messagePage: {
-    messagesData: Array<MessageType>;
-    dialogsData: Array<DialogType>;
-  };
-  sidebar: { dialogsData: Array<DialogType> };
+export type StateType = {
+  profilePage: ProfilePageType;
+  messagePage: MessagesDataType;
+  sidebar: SidebarType;
+};
+
+export type SidebarType = {
+  dialogsData: Array<DialogType>;
+};
+
+export type ProfilePageType = {
+  posts: Array<PostType>;
+  newPostText: string;
+};
+
+export type MessagesDataType = {
+  messagesData: Array<MessageType>;
+  dialogsData: Array<DialogType>;
 };
 
 export type PostType = {
@@ -48,7 +53,7 @@ export type MessageType = {
   sender: boolean;
 };
 
-function App(props: statePropsType) {
+function App(props: StatePropsType) {
   return (
     <BrowserRouter>
       <div className="app-wrapper">
@@ -57,9 +62,14 @@ function App(props: statePropsType) {
         {/* <Profile /> */}
         <div className="app-wrapper-content">
           <Route
-            
             path="/profile"
-            render={() => <Profile posts={props.state.profilePage.posts} addPost = {props.addPost}/>}
+            render={() => (
+              <Profile
+                profilePage={props.state.profilePage}
+                addPost={props.addPost}
+                updateNewPostYext={props.updateNewPostYext}
+              />
+            )}
           />
           <Route
             path="/dialogs"

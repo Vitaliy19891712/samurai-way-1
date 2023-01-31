@@ -1,11 +1,12 @@
 import { MyPosts } from "./Myposts/MyPosts";
 import { ProfileInfo } from "./PtofileInfo/ProfileInfo";
 import s from "./Profile.module.css";
-import { PostType } from "../../App";
+import { PostType, ProfilePageType } from "../../App";
 
 export type ProfilePropsType = {
-  posts: Array<PostType>;
-  addPost: (message:string)=>void
+  profilePage: ProfilePageType;
+  addPost: () => void;
+  updateNewPostYext: (text: string) => void;
 };
 
 export function Profile(props: ProfilePropsType) {
@@ -13,7 +14,11 @@ export function Profile(props: ProfilePropsType) {
     <div className={s.item}>
       <ProfileInfo />
 
-      <MyPosts posts={props.posts} addPost={ props.addPost} />
+      <MyPosts
+        profilePage={props.profilePage}
+        addPost={props.addPost}
+        updateNewPostYext={props.updateNewPostYext}
+      />
     </div>
   );
 }

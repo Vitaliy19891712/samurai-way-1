@@ -5,22 +5,32 @@ import React, { RefObject } from "react";
 import { text } from "stream/consumers";
 
 export function MyPosts(props: ProfilePropsType) {
-  let postDate = props.posts.map((pd) => (
+  let postDate = props.profilePage.posts.map((pd) => (
     <Post message={pd.message} likeCount={pd.likeCount} id={pd.id} />
   ));
 
-  let newPostElement: any = React.createRef();
+  let newPostElement = React.createRef<HTMLTextAreaElement>();
 
-  let addPost = () => {
-    props.addPost(newPostElement.current.value);
-    newPostElement.current.value = "";
+  const addPost = () => {
+    props.addPost();
+  };
+
+  const onPostChange = () => {
+    if (newPostElement.current) {
+      props.updateNewPostYext(newPostElement.current.value);
+    }
+    // props.updateNewPostYext("");
   };
 
   return (
     <div className={s.item}>
       <h2>My post</h2>
       <div>
-        <textarea ref={newPostElement}></textarea>
+        <textarea
+          ref={newPostElement}
+          value={props.profilePage.newPostText}
+          onChange={onPostChange}
+        />
         <div>
           <button onClick={addPost}>Добавить пост</button>
         </div>

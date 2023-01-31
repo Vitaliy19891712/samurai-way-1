@@ -1,7 +1,10 @@
-import { PostType, stateType } from "../App";
-import { rerenderEntireTree } from "../render";
+import { PostType, StateType } from "../App";
 
-let state: stateType = {
+let rerenderEntireTree = (state: StateType) => {
+  console.log("state change");
+};
+
+export let state: StateType = {
   profilePage: {
     posts: [
       { id: "1", message: "Hello", likeCount: 17 },
@@ -12,6 +15,7 @@ let state: stateType = {
         likeCount: 67,
       },
     ],
+    newPostText: "",
   },
   messagePage: {
     messagesData: [
@@ -88,15 +92,22 @@ let state: stateType = {
   },
 };
 
-export let addPost = (postMessage: string) => {
+export const addPost = () => {
   let newPost: PostType = {
     id: "5",
-    message: postMessage,
+    message: state.profilePage.newPostText,
     likeCount: 0,
   };
-
   state.profilePage.posts.push(newPost);
+  state.profilePage.newPostText = "";
   rerenderEntireTree(state);
 };
 
-export default state;
+export const updateNewPostYext = (newText: string) => {
+  state.profilePage.newPostText = newText;
+  rerenderEntireTree(state);
+};
+
+export const subscribe = (observer: (state: StateType) => void) => {
+  rerenderEntireTree = observer;
+};
