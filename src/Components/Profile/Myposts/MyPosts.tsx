@@ -3,6 +3,7 @@ import { Post } from "./Post/Post";
 import { ProfilePropsType } from "../Profile";
 import React, { RefObject } from "react";
 import { text } from "stream/consumers";
+import { addPostCreator, updateNewPostTextCreator } from "../../../Redux/state";
 
 export function MyPosts(props: ProfilePropsType) {
   let postDate = props.profilePage.posts.map((pd) => (
@@ -12,12 +13,12 @@ export function MyPosts(props: ProfilePropsType) {
   let newPostElement = React.createRef<HTMLTextAreaElement>();
 
   const addPost = () => {
-    props.addPost();
+    props.dispatch(addPostCreator());
   };
 
   const onPostChange = () => {
     if (newPostElement.current) {
-      props.updateNewPostYext(newPostElement.current.value);
+      props.dispatch(updateNewPostTextCreator(newPostElement.current.value));
     }
     // props.updateNewPostYext("");
   };

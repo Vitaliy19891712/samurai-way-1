@@ -1,4 +1,3 @@
-import React from "react";
 import { BrowserRouter, Route } from "react-router-dom";
 import "./App.css";
 import Dialogs from "./Components/Dialogs/Dialogs";
@@ -8,11 +7,10 @@ import { Navbar } from "./Components/Nav/Nav";
 import News from "./Components/News/News";
 import { Profile } from "./Components/Profile/Profile";
 import Settings from "./Components/Settings/Settings";
+import { ActionTypes, store, StoreType } from "./Redux/state";
 
-export type StatePropsType = {
-  state: StateType;
-  addPost: () => void;
-  updateNewPostYext: (text: string) => void;
+export type AppPropsType = {
+  store: StoreType;
 };
 
 export type StateType = {
@@ -33,6 +31,7 @@ export type ProfilePageType = {
 export type MessagesDataType = {
   messagesData: Array<MessageType>;
   dialogsData: Array<DialogType>;
+  newMessageBody: string;
 };
 
 export type PostType = {
@@ -53,27 +52,26 @@ export type MessageType = {
   sender: boolean;
 };
 
-function App(props: StatePropsType) {
+function App(props: AppPropsType) {
   return (
     <BrowserRouter>
       <div className="app-wrapper">
         <Header />
-        <Navbar ikons={props.state.sidebar.dialogsData} />
+        <Navbar ikons={props.store._state.sidebar.dialogsData} />
         {/* <Profile /> */}
         <div className="app-wrapper-content">
           <Route
             path="/profile"
             render={() => (
               <Profile
-                profilePage={props.state.profilePage}
-                addPost={props.addPost}
-                updateNewPostYext={props.updateNewPostYext}
+                profilePage={props.store._state.profilePage}
+                dispatch={props.store.dispatch}
               />
             )}
           />
           <Route
             path="/dialogs"
-            render={() => <Dialogs data={props.state.messagePage} />}
+            render={() => <Dialogs store={props.store} />}
           />
           <Route path="/news" render={() => <News />} />
           <Route path="/musics" render={() => <Musics />} />
