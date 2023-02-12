@@ -57,15 +57,15 @@ function App(props: AppPropsType) {
     <BrowserRouter>
       <div className="app-wrapper">
         <Header />
-        <Navbar ikons={props.store._state.sidebar.dialogsData} />
+        <Navbar ikons={props.store.getState().sidebar.dialogsData} />
         {/* <Profile /> */}
         <div className="app-wrapper-content">
           <Route
             path="/profile"
             render={() => (
               <Profile
-                profilePage={props.store._state.profilePage}
-                dispatch={props.store.dispatch}
+                profilePage={props.store.getState().profilePage}
+                dispatch={props.store.dispatch.bind(store)}
               />
             )}
           />
