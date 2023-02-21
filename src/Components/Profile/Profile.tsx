@@ -1,20 +1,18 @@
-import { MyPosts } from "./Myposts/MyPosts";
 import { ProfileInfo } from "./PtofileInfo/ProfileInfo";
 import s from "./Profile.module.css";
-import { ProfilePageType } from "../../App";
-import { ActionTypes } from "../../Redux/state";
+import { StoreType } from "../../Redux/store";
+import { MyPostsContainer } from "./Myposts/Post/MyPostsContainer";
 
 export type ProfilePropsType = {
-  profilePage: ProfilePageType;
-  dispatch: (action: ActionTypes) => void;
+  store: StoreType;
 };
 
-export function Profile(props: ProfilePropsType) {
+export function Profile() {
   return (
     <div className={s.item}>
       <ProfileInfo />
 
-      <MyPosts profilePage={props.profilePage} dispatch={props.dispatch} />
+      <MyPostsContainer />
     </div>
   );
 }

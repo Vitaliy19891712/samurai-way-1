@@ -1,13 +1,13 @@
 import { BrowserRouter, Route } from "react-router-dom";
 import "./App.css";
-import Dialogs from "./Components/Dialogs/Dialogs";
+import { DialogsContainer } from "./Components/Dialogs/DialogsContainer";
 import { Header } from "./Components/Header/Header";
 import Musics from "./Components/Musics/Musics";
 import { Navbar } from "./Components/Nav/Nav";
 import News from "./Components/News/News";
 import { Profile } from "./Components/Profile/Profile";
 import Settings from "./Components/Settings/Settings";
-import { ActionTypes, store, StoreType } from "./Redux/state";
+import { StoreType } from "./Redux/store";
 
 export type AppPropsType = {
   store: StoreType;
@@ -52,27 +52,16 @@ export type MessageType = {
   sender: boolean;
 };
 
-function App(props: AppPropsType) {
+function App() {
   return (
     <BrowserRouter>
       <div className="app-wrapper">
         <Header />
-        <Navbar ikons={props.store.getState().sidebar.dialogsData} />
+        <Navbar />
         {/* <Profile /> */}
         <div className="app-wrapper-content">
-          <Route
-            path="/profile"
-            render={() => (
-              <Profile
-                profilePage={props.store.getState().profilePage}
-                dispatch={props.store.dispatch.bind(store)}
-              />
-            )}
-          />
-          <Route
-            path="/dialogs"
-            render={() => <Dialogs store={props.store} />}
-          />
+          <Route path="/profile" render={() => <Profile />} />
+          <Route path="/dialogs" render={() => <DialogsContainer />} />
           <Route path="/news" render={() => <News />} />
           <Route path="/musics" render={() => <Musics />} />
           <Route path="/settings" render={() => <Settings />} />

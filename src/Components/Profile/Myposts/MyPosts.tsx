@@ -1,25 +1,26 @@
 import s from "./MyPosts.module.css";
 import { Post } from "./Post/Post";
-import { ProfilePropsType } from "../Profile";
 import { ChangeEvent } from "react";
-import {
-  addPostCreator,
-  updateNewPostTextCreator,
-} from "../../../Redux/profile-reduser";
+import { PostType } from "../../../App";
 
-export function MyPosts(props: ProfilePropsType) {
-
-  let postDate = props.profilePage.posts.map((pd) => (
+type MyPostPropsType = {
+  updateNewPostText: (t: string) => void;
+  addPost: () => void;
+  profilePage: Array<PostType>;
+  newPostText: string;
+};
+export function MyPosts(props: MyPostPropsType) {
+  let postDate = props.profilePage.map((pd) => (
     <Post message={pd.message} likeCount={pd.likeCount} id={pd.id} />
   ));
 
-  const addPost = () => {
-    props.dispatch(addPostCreator());
+  const onAddPost = () => {
+    props.addPost();
   };
 
   const onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     let text = e.target.value;
-    props.dispatch(updateNewPostTextCreator(text));
+    props.updateNewPostText(text);
   };
 
   return (
@@ -27,12 +28,12 @@ export function MyPosts(props: ProfilePropsType) {
       <h2>My post</h2>
       <div>
         <textarea
-          value={props.profilePage.newPostText}
+          value={props.newPostText}
           onChange={onPostChange}
           placeholder="Введите сообщение"
         />
         <div>
-          <button onClick={addPost}>Добавить пост</button>
+          <button onClick={onAddPost}>Добавить пост</button>
         </div>
       </div>
       <div className={s.posts}>{postDate}</div>

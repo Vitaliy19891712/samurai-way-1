@@ -116,9 +116,10 @@ export let store: StoreType = {
     console.log("state change");
   },
 
-  getState() {
+  getState(): StateType {
     return this._state;
   },
+
   subscribe(observer: (state: StateType) => void) {
     this._callSubscriber = observer;
   },
@@ -131,4 +132,4 @@ export let store: StoreType = {
   },
 };
 // @ts-ignore
-window.store = store
+window.store = store;
