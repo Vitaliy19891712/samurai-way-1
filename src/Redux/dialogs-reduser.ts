@@ -1,5 +1,20 @@
-import { MessagesDataType } from "../App";
-import { ActionTypes } from "./store";
+export type MessagesDataType = {
+  messagesData: Array<MessageType>;
+  dialogsData: Array<DialogType>;
+  newMessageBody: string;
+};
+
+export type DialogType = {
+  id: string;
+  name: string;
+  foto: string;
+};
+
+export type MessageType = {
+  id: string;
+  messages: string;
+  sender: boolean;
+};
 
 export const UPDATE_NEW_MESSAGE_BODY = "UPDATE-NEW-MESSAGE-BODY";
 export const SEND_MESSAGE = "SEND-MESSAGE";
@@ -56,23 +71,28 @@ let initialState: MessagesDataType = {
   newMessageBody: "",
 };
 
-const dialogsReduser = (
-  state: MessagesDataType = initialState,
-  action: ActionTypes
-): MessagesDataType => {
+export type ActionDialogReduserTypes = ReturnType<typeof updateNewMessageBodyCreator> | ReturnType<typeof sendMessageCreator>;
+
+const dialogsReduser = (state: MessagesDataType = initialState, action: ActionDialogReduserTypes): MessagesDataType => {
   switch (action.type) {
     case UPDATE_NEW_MESSAGE_BODY:
-      state.newMessageBody = action.body;
-      return state;
+      return { ...state, newMessageBody: action.body };
+
     case SEND_MESSAGE:
       let body = state.newMessageBody;
-      state.newMessageBody = "";
-      state.messagesData.push({
-        id: "4",
-        messages: body,
-        sender: true,
-      });
-      return state;
+      return {
+        ...state,
+        newMessageBody: "",
+        messagesData: [
+          ...state.messagesData,
+          {
+            id: "4",
+            messages: body,
+            sender: true,
+          },
+        ],
+      };
+
     default:
       return state;
   }

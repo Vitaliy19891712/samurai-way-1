@@ -1,5 +1,5 @@
 import React from "react";
-import { MessageType } from "../../../App";
+import { MessageType } from "../../../Redux/dialogs-reduser";
 import s from "./Message.module.css";
 
 function Message(props: MessageType) {

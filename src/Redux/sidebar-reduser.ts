@@ -1,5 +1,10 @@
-import { SidebarType } from "../App";
-import { ActionTypes } from "./store";
+import { DialogType } from "./dialogs-reduser";
+
+export type SidebarType = {
+  dialogsData: Array<DialogType>;
+};
+
+export type SidebarReduserTypes = any;
 
 let initialState: SidebarType = {
   dialogsData: [
@@ -36,10 +41,7 @@ let initialState: SidebarType = {
   ],
 };
 
-const sidebarReduser = (
-  state: SidebarType = initialState,
-  action: ActionTypes
-): SidebarType => {
+const sidebarReduser = (state: SidebarType = initialState, action: SidebarReduserTypes): SidebarType => {
   return state;
 };
 export default sidebarReduser;

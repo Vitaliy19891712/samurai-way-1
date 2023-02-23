@@ -1,7 +1,7 @@
 import s from "./MyPosts.module.css";
 import { Post } from "./Post/Post";
 import { ChangeEvent } from "react";
-import { PostType } from "../../../App";
+import { PostType } from "../../../Redux/profile-reduser";
 
 type MyPostPropsType = {
   updateNewPostText: (t: string) => void;
@@ -10,9 +10,7 @@ type MyPostPropsType = {
   newPostText: string;
 };
 export function MyPosts(props: MyPostPropsType) {
-  let postDate = props.profilePage.map((pd) => (
-    <Post message={pd.message} likeCount={pd.likeCount} id={pd.id} />
-  ));
+  let postDate = props.profilePage.map((pd) => <Post key={pd.id} message={pd.message} likeCount={pd.likeCount} id={pd.id} />);
 
   const onAddPost = () => {
     props.addPost();
@@ -27,11 +25,7 @@ export function MyPosts(props: MyPostPropsType) {
     <div className={s.item}>
       <h2>My post</h2>
       <div>
-        <textarea
-          value={props.newPostText}
-          onChange={onPostChange}
-          placeholder="Введите сообщение"
-        />
+        <textarea value={props.newPostText} onChange={onPostChange} placeholder="Введите сообщение" />
         <div>
           <button onClick={onAddPost}>Добавить пост</button>
         </div>

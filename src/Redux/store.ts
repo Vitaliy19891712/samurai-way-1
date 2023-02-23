@@ -1,15 +1,19 @@
-import { StateType } from "../App";
-import dialogsReduser, {
-  sendMessageCreator,
-  updateNewMessageBodyCreator,
-} from "./dialogs-reduser";
-import profileReduser, {
-  addPostCreator,
-  updateNewPostTextCreator,
-} from "./profile-reduser";
+import dialogsReduser, { ActionDialogReduserTypes } from "./dialogs-reduser";
+import profileReduser, { ActionProfileReduserTypes } from "./profile-reduser";
 import sidebarReduser from "./sidebar-reduser";
+import { ActionUsersReduserType } from "./users-reduser";
 
-export type StoreType = {
+type StateType = {
+  profilePage: { posts: Array<{ id: string; message: string; likeCount: number }>; newPostText: string };
+  messagePage: {
+    messagesData: Array<{ id: string; messages: string; sender: boolean }>;
+    dialogsData: Array<{ id: string; name: string; foto: string }>;
+    newMessageBody: string;
+  };
+  sidebar: { dialogsData: Array<{ id: string; name: string; foto: string }> };
+};
+
+type StoreType = {
   _state: StateType;
   getState: () => StateType;
   _callSubscriber: (state: StateType) => void;
@@ -17,13 +21,9 @@ export type StoreType = {
   dispatch: (action: ActionTypes) => void;
 };
 
-export type ActionTypes =
-  | ReturnType<typeof addPostCreator>
-  | ReturnType<typeof updateNewPostTextCreator>
-  | ReturnType<typeof updateNewMessageBodyCreator>
-  | ReturnType<typeof sendMessageCreator>;
+type ActionTypes = any;
 
-export let store: StoreType = {
+let store: StoreType = {
   _state: {
     profilePage: {
       posts: [
