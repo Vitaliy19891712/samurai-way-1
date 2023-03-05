@@ -14,5 +14,6 @@ let rootReduser = combineReducers({
 });
 
 export let store = createStore(rootReduser);
+console.log(store);
 
 // window.store = store;
