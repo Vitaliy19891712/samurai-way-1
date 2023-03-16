@@ -25,3 +25,10 @@
   flex-direction: column;
   justify-content: space-between;
 }
+.selectedPage {
+  font-weight: 700;
+  cursor: pointer;
+}
+.page {
+  cursor: pointer;
+}

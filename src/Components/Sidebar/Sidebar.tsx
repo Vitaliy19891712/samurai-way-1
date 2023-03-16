@@ -1,7 +1,7 @@
 import React from "react";
 import SideBarItem from "./SideBarItem/SideBarItem";
 import s from "./Sidebar.module.css";
-import { DialogType } from "../../Redux/dialogs-reduser";
+import { DialogType } from "../../Redux/dialogs-reducer";
 
 export type NavbarPropsType = {
   ikons: Array<DialogType>;

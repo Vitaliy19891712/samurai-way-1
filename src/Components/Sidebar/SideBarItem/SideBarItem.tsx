@@ -1,5 +1,5 @@
 import React from "react";
-import { DialogType } from "../../../Redux/dialogs-reduser";
+import { DialogType } from "../../../Redux/dialogs-reducer";
 import s from "./SideBarItem.module.css";
 
 function SideBarItem(props: DialogType) {

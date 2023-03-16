@@ -1,11 +1,16 @@
 import { ProfileInfo } from "./PtofileInfo/ProfileInfo";
 import s from "./Profile.module.css";
 import { MyPostsContainer } from "./Myposts/Post/MyPostsContainer";
+import { ProfileType } from "../../Redux/profile-reducer";
 
-export function Profile() {
+type ProfilePropsType = {
+  profile: ProfileType;
+};
+
+export function Profile(props: ProfilePropsType) {
   return (
     <div className={s.item}>
-      <ProfileInfo />
+      <ProfileInfo profile={props.profile} />
 
       <MyPostsContainer />
     </div>

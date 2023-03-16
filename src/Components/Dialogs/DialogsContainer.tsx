@@ -1,4 +1,4 @@
-import { ActionDialogReduserTypes, sendMessageCreator, updateNewMessageBodyCreator } from "../../Redux/dialogs-reduser";
+import { ActionDialogReduserTypes, sendMessageCreator, updateNewMessageBodyCreator } from "../../Redux/dialogs-reducer";
 import Dialogs from "./Dialogs";
 import { connect } from "react-redux";
 import { AppStateType } from "../../Redux/redux-store";
