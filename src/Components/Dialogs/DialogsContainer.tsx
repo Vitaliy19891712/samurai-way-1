@@ -4,7 +4,10 @@ import { connect } from "react-redux";
 import { AppStateType } from "../../Redux/redux-store";
 
 let mapStateToProps = (state: AppStateType) => {
-  return { messagePage: state.messagePage };
+  return {
+    messagePage: state.messagePage,
+    isAuth: state.auth.isAuth,
+  };
 };
 
 let mapDispatchToProps = (dispatch: (action: ActionDialogReduserTypes) => void) => {

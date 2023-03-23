@@ -1,12 +1,6 @@
-export type ActionusersReducerType =
-  | ReturnType<typeof setCurrentPage>
-  | ReturnType<typeof unfollow>
-  | ReturnType<typeof follow>
-  | ReturnType<typeof setUsers>
-  | ReturnType<typeof setTotalUsersCount>
-  | ReturnType<typeof toogleIsFetching>
-  | ReturnType<typeof toogleIsFollowingProgress>;
-
+import { userAPI } from "../API/API";
+import { AppThunk } from "./redux-store";
+// VARIABLES
 export const FOLLOW = "FOLLOW";
 export const UNFOLLOW = "UNFOLLOW";
 export const SET_USERS = "SET_USERS";
@@ -15,9 +9,10 @@ export const SET_TOTAL_USERS_COUNT = "SET_TOTAL_USERS_COUNT";
 export const TOOGLE_IS_FETCHING = "TOOGLE_IS_FETCHING";
 export const TOOGLE_IS_FOLLOWING_PROGRESS = "TOOGLE_IS_FOLLOWING_PROGRESS";
 
-export const unfollow = (userId: string) => ({ type: UNFOLLOW, userId } as const);
+// ACTION CREATORS
+export const unfollowSuccess = (userId: string) => ({ type: UNFOLLOW, userId } as const);
 
-export const follow = (userId: string) => ({ type: FOLLOW, userId } as const);
+export const followSuccess = (userId: string) => ({ type: FOLLOW, userId } as const);
 
 export const setUsers = (users: Array<UserType>) => ({ type: SET_USERS, users } as const);
 
@@ -29,6 +24,16 @@ export const toogleIsFetching = (isFetching: boolean) => ({ type: TOOGLE_IS_FETC
 
 export const toogleIsFollowingProgress = (userId: string, isFetching: boolean) =>
   ({ type: TOOGLE_IS_FOLLOWING_PROGRESS, userId, isFetching } as const);
+
+//TIPIZATION
+export type ActionUsersReducerType =
+  | ReturnType<typeof setCurrentPage>
+  | ReturnType<typeof unfollowSuccess>
+  | ReturnType<typeof followSuccess>
+  | ReturnType<typeof setUsers>
+  | ReturnType<typeof setTotalUsersCount>
+  | ReturnType<typeof toogleIsFetching>
+  | ReturnType<typeof toogleIsFollowingProgress>;
 
 export type InitialStateType = {
   users: Array<UserType>;
@@ -53,6 +58,7 @@ export type UserLocationType = {
   country: string;
 };
 
+// INITIAL STATE
 let initialState: InitialStateType = {
   users: [],
   pageSize: 15,
@@ -62,7 +68,8 @@ let initialState: InitialStateType = {
   followingInProgress: [],
 };
 
-const usersReducer = (state: InitialStateType = initialState, action: ActionusersReducerType): InitialStateType => {
+// REDUSER
+const usersReducer = (state: InitialStateType = initialState, action: ActionUsersReducerType): InitialStateType => {
   switch (action.type) {
     case FOLLOW:
       return {
@@ -105,4 +112,43 @@ const usersReducer = (state: InitialStateType = initialState, action: Actionuser
       return state;
   }
 };
+
+// THUNK
+export const getUsers = (currentPage: number, pageSize: number): AppThunk => {
+  return (dispatch) => {
+    dispatch(toogleIsFetching(true));
+    userAPI.getUsers(currentPage, pageSize).then((data) => {
+      dispatch(toogleIsFetching(false));
+      dispatch(setUsers(data.items));
+      dispatch(setTotalUsersCount(data.totalCount));
+    });
+  };
+};
+
+export const follow = (userId: string): AppThunk => {
+  return (dispatch) => {
+    dispatch(toogleIsFollowingProgress(userId, true));
+    userAPI.follow(userId).then((data) => {
+      if (data.resultCode === 0) {
+        dispatch(followSuccess(userId));
+      }
+      dispatch(toogleIsFollowingProgress(userId, false));
+    });
+  };
+};
+
+export const unfollow = (userId: string): AppThunk => {
+  return (dispatch) => {
+    dispatch(toogleIsFollowingProgress(userId, true));
+    userAPI.unfollow(userId).then((data) => {
+      if (data.resultCode === 0) {
+        dispatch(unfollowSuccess(userId));
+      }
+      dispatch(toogleIsFollowingProgress(userId, false));
+    });
+  };
+};
+
+
+
 export default usersReducer;

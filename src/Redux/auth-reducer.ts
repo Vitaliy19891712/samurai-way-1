@@ -1,23 +1,10 @@
+import { Dispatch } from "redux";
+import { authAPI } from "../API/API";
+import { AppActionsType, AppThunk } from "./redux-store";
+
 export type ActionUsersReduserType = ReturnType<typeof setAuthUserData>;
-// | ReturnType<typeof unfollow>
-// | ReturnType<typeof follow>
-// | ReturnType<typeof setUsers>
-// | ReturnType<typeof setTotalUsersCount>
-// | ReturnType<typeof toogleIsFetching>;
 
-// export const FOLLOW = "FOLLOW";
-// export const UNFOLLOW = "UNFOLLOW";
-// export const SET_USERS = "SET_USERS";
-// export const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
 export const SET_AUTH_USER_DATA = "SET_AUTH_USER_DATA";
-
-// export const unfollow = (userId: string) => ({ type: UNFOLLOW, userId } as const);
-
-// export const follow = (userId: string) => ({ type: FOLLOW, userId } as const);
-
-// export const setUsers = (users: Array<UserType>) => ({ type: SET_USERS, users } as const);
-
-// export const setCurrentPage = (page: number) => ({ type: SET_CURRENT_PAGE, page } as const);
 
 export const setAuthUserData = (data: InitialStateType) => ({ type: SET_AUTH_USER_DATA, data } as const);
 
@@ -48,4 +35,15 @@ const authReducer = (state: InitialStateType = initialState, action: ActionUsers
       return state;
   }
 };
+
+export const getMe = (): AppThunk => {
+  return (dispatch) => {
+    authAPI.getMe().then((data) => {
+      if (data.resultCode === 0) {
+        dispatch(setAuthUserData(data.data));
+      }
+    });
+  };
+};
+
 export default authReducer;

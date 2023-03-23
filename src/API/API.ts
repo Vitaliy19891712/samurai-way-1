@@ -12,6 +12,12 @@ export const userAPI = {
   getUsers(currentPage: number, pageSize: number) {
     return instanse.get(`users?page=${currentPage}&count=${pageSize}`).then((response) => response.data);
   },
+  unfollow(id: string) {
+    return instanse.delete(`follow/${id}`).then((response) => response.data);
+  },
+  follow(id: string) {
+    return instanse.post(`follow/${id}`).then((response) => response.data);
+  },
 };
 
 export const profileAPI = {
@@ -22,15 +28,7 @@ export const profileAPI = {
 
 export const authAPI = {
   getMe() {
-    return instanse.get(`auth/me`, { withCredentials: true }).then((response) => response.data);
+    return instanse.get(`auth/me`).then((response) => response.data);
   },
 };
 
-export const followUnfollowAPI = {
-  unfollow(id: string) {
-    return instanse.delete(`follow/${id}`).then((response) => response.data);
-  },
-  follow(id: string) {
-    return instanse.post(`follow/${id}`).then((response) => response.data);
-  },
-};

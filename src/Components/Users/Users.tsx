@@ -2,7 +2,7 @@ import { UserType } from "../../Redux/users-reducer";
 import s from "./users.module.css";
 import userPhoto from "./../../assets/images/user.png";
 import { NavLink } from "react-router-dom";
-import { followUnfollowAPI } from "../../API/API";
+import { userAPI } from "../../API/API";
 
 type PropsUsersType = {
   totalUsersCount: number;
@@ -12,7 +12,6 @@ type PropsUsersType = {
   users: Array<UserType>;
   unfollow: (id: string) => void;
   follow: (id: string) => void;
-  toogleIsFollowingProgress: (userId: string, isFetching: boolean) => void;
   followingInProgress: Array<string>;
 };
 
@@ -28,6 +27,7 @@ const Users = (props: PropsUsersType) => {
       <div>
         {pages.map((p) => (
           <span
+            key={p}
             className={props.currentPage === p ? s.selectedPage : s.page}
             onClick={() => {
               props.onPageChanged(p);
@@ -50,13 +50,7 @@ const Users = (props: PropsUsersType) => {
                 <button
                   disabled={props.followingInProgress.some((id) => id === u.id)}
                   onClick={() => {
-                    props.toogleIsFollowingProgress(u.id, true);
-                    followUnfollowAPI.unfollow(u.id).then((data) => {
-                      if (data.resultCode === 0) {
-                        props.unfollow(u.id);
-                      }
-                      props.toogleIsFollowingProgress(u.id, false);
-                    });
+                    props.unfollow(u.id);
                   }}
                 >
                   Unfollow
@@ -65,13 +59,7 @@ const Users = (props: PropsUsersType) => {
                 <button
                   disabled={props.followingInProgress.some((id) => id === u.id)}
                   onClick={() => {
-                    props.toogleIsFollowingProgress(u.id, true);
-                    followUnfollowAPI.follow(u.id).then((data) => {
-                      if (data.resultCode === 0) {
-                        props.follow(u.id);
-                      }
-                      props.toogleIsFollowingProgress(u.id, false);
-                    });
+                    props.follow(u.id);
                   }}
                 >
                   Follow

@@ -3,14 +3,19 @@ import s from "./Dialogs.module.css";
 import DialogItem from "./DialogItem/Dialogsitem";
 import Message from "./Message/Message";
 import { MessagesDataType } from "../../Redux/dialogs-reducer";
+import { Redirect } from "react-router-dom";
 
 export type DialogsPropsType = {
   onNewMessageChange: (body: string) => void;
   onSendMessageClick: () => void;
   messagePage: MessagesDataType;
+  isAuth: boolean;
 };
 
 function Dialogs(props: DialogsPropsType) {
+  if (!props.isAuth) {
+    return <Redirect to={"/login"} />;
+  }
   let dialogies = props.messagePage.dialogsData.map((d) => <DialogItem key={d.id} name={d.name} id={d.id} foto={d.foto} />);
 
   let messagies = props.messagePage.messagesData.map((m) => <Message key={m.id} messages={m.messages} id={m.id} sender={m.sender} />);

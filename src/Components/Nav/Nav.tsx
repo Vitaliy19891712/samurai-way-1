@@ -1,28 +1,16 @@
 import { NavLink } from "react-router-dom";
 import s from "./Nav.module.css";
 
-
 export function Navbar() {
   return (
-    // <StoreContext.Consumer>
-    //   {(store:any) => {
-    //     return (
     <nav className="nav">
       <div>
-        <NavLink
-          to="/profile"
-          className={s.item}
-          activeClassName={s.activeLink}
-        >
+        <NavLink to="/profile" className={s.item} activeClassName={s.activeLink}>
           Profile
         </NavLink>
       </div>
       <div>
-        <NavLink
-          to="/dialogs"
-          className={s.item}
-          activeClassName={s.activeLink}
-        >
+        <NavLink to="/dialogs" className={s.item} activeClassName={s.activeLink}>
           Message
         </NavLink>
       </div>
@@ -44,11 +32,7 @@ export function Navbar() {
         </NavLink>
       </div>
       <div>
-        <NavLink
-          to="/settings"
-          className={s.item}
-          activeClassName={s.activeLink}
-        >
+        <NavLink to="/settings" className={s.item} activeClassName={s.activeLink}>
           Settings
         </NavLink>
       </div>
@@ -56,8 +40,5 @@ export function Navbar() {
               <Sidebar ikons={store.getState().sidebar.dialogsData} />
             </div> */}
     </nav>
-    // );
-    //   }}
-    // </StoreContext.Consumer>
   );
 }
