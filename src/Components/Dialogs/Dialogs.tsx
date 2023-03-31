@@ -13,9 +13,7 @@ export type DialogsPropsType = {
 };
 
 function Dialogs(props: DialogsPropsType) {
-  if (!props.isAuth) {
-    return <Redirect to={"/login"} />;
-  }
+
   let dialogies = props.messagePage.dialogsData.map((d) => <DialogItem key={d.id} name={d.name} id={d.id} foto={d.foto} />);
 
   let messagies = props.messagePage.messagesData.map((m) => <Message key={m.id} messages={m.messages} id={m.id} sender={m.sender} />);

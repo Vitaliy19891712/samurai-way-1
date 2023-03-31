@@ -1,6 +1,6 @@
 import { Route } from "react-router-dom";
 import "./App.css";
-import { DialogsContainer } from "./Components/Dialogs/DialogsContainer";
+import DialogsContainer from "./Components/Dialogs/DialogsContainer";
 import HeaderContainer from "./Components/Header/HeaderContainer";
 import Login from "./Components/Login/Login";
 import Musics from "./Components/Musics/Musics";
