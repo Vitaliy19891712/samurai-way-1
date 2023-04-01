@@ -1,5 +1,5 @@
 import axios from "axios";
-// 
+//
 const instanse = axios.create({
   withCredentials: true,
   baseURL: "https://social-network.samuraijs.com/api/1.0/",
@@ -24,6 +24,12 @@ export const profileAPI = {
   getProfile(userId: string) {
     return instanse.get(`profile/` + userId).then((response) => response.data);
   },
+  getStatus(userId: string) {
+    return instanse.get(`profile/status/` + userId).then((response) => response.data);
+  },
+  updateStatus(status: string) {
+    return instanse.put(`profile/status/`, { status: status }).then((response) => response.data);
+  },
 };
 
 export const authAPI = {
@@ -31,4 +37,3 @@ export const authAPI = {
     return instanse.get(`auth/me`).then((response) => response.data);
   },
 };
-

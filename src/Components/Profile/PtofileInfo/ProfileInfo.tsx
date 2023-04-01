@@ -4,6 +4,8 @@ import s from "./ProfileInfo.module.css";
 import ProfileStatus from "./ProfileStatus";
 type ProfileInfoType = {
   profile: ProfileType;
+  status: string;
+  updateStatus: (status: string) => void;
 };
 
 export function ProfileInfo(props: ProfileInfoType) {
@@ -18,6 +20,7 @@ export function ProfileInfo(props: ProfileInfoType) {
     ) : (
       <div>{<img src="https://avatars.mds.yandex.net/i?id=150e3ccfcc5d7d099bfe9a3b0c3ccf0a0536312d-8253063-images-thumbs&n=13" alt="" />}</div>
     );
+
   return (
     <div>
       {/* <img
@@ -26,7 +29,7 @@ export function ProfileInfo(props: ProfileInfoType) {
         alt="Logo"
       /> */}
       {photo}
-      <ProfileStatus status={"Hello my fty"} />
+      <ProfileStatus status={props.status} updateStatus={props.updateStatus } />
       <div>My full name: {props.profile.fullName}</div>
       <div>Work: {props.profile.lookingForAJobDescription}</div>
       <div>List contacts:</div>
