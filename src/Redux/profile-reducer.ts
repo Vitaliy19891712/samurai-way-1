@@ -1,9 +1,8 @@
-import { profileAPI } from "../API/API";
+import { profileAPI } from "../api/API";
 import { AppThunk } from "./redux-store";
 
 export type ProfilePageType = {
   posts: Array<PostType>;
-  newPostText: string;
   profile: ProfileType;
   status: string;
 };
@@ -37,19 +36,15 @@ export type PostType = {
 };
 
 export const ADD_POST = "ADD-POST";
-export const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
 export const SET_USER_PROFILE = "SET_USER_PROFILE";
 export const SET_STATUS = "SET_STATUS";
 
-export const addPostCreator = () =>
+export const addPostCreator = (message: string) =>
   ({
     type: ADD_POST,
+    message,
   } as const);
-export const updateNewPostTextCreator = (text: string) =>
-  ({
-    type: UPDATE_NEW_POST_TEXT,
-    newText: text,
-  } as const);
+
 export const setUserProfile = (profile: ProfileType) =>
   ({
     type: SET_USER_PROFILE,
@@ -71,36 +66,25 @@ const initialState: ProfilePageType = {
       likeCount: 67,
     },
   ],
-  newPostText: "",
   profile: null,
   status: "",
 };
 
-export type ActionProfileReducerTypes =
-  | ReturnType<typeof addPostCreator>
-  | ReturnType<typeof updateNewPostTextCreator>
-  | ReturnType<typeof setStatus>
-  | ReturnType<typeof setUserProfile>;
+export type ActionProfileReducerTypes = ReturnType<typeof addPostCreator> | ReturnType<typeof setStatus> | ReturnType<typeof setUserProfile>;
 
 const profileReducer = (state: ProfilePageType = initialState, action: ActionProfileReducerTypes): ProfilePageType => {
   switch (action.type) {
     case ADD_POST:
       return {
         ...state,
-        newPostText: "",
         posts: [
           ...state.posts,
           {
             id: "5",
-            message: state.newPostText,
+            message: action.message,
             likeCount: 0,
           },
         ],
-      };
-    case UPDATE_NEW_POST_TEXT:
-      return {
-        ...state,
-        newPostText: action.newText,
       };
     case SET_USER_PROFILE:
       return {
@@ -112,7 +96,7 @@ const profileReducer = (state: ProfilePageType = initialState, action: ActionPro
         ...state,
         status: action.status,
       };
-   
+
     default:
       return state;
   }

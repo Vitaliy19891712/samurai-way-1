@@ -1,10 +1,11 @@
+import { fchmod } from "fs";
 import s from "./Post.module.css";
 import React from "react";
 
 type PostProp = {
   message: string;
   likeCount: number;
-  id: string
+  id: string;
 };
 
 export function Post(props: PostProp) {

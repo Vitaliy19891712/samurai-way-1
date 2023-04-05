@@ -1,13 +1,13 @@
 import { ProfileInfo } from "./PtofileInfo/ProfileInfo";
 import s from "./Profile.module.css";
-import { MyPostsContainer } from "./Myposts/Post/MyPostsContainer";
+import { MyPostsContainer } from "./Myposts/MyPostsContainer";
 import { ProfileType } from "../../Redux/profile-reducer";
 import { Redirect } from "react-router-dom";
 
 type ProfilePropsType = {
   profile: ProfileType;
   status: string;
-  updateStatus: (status:string) => void;
+  updateStatus: (status: string) => void;
 };
 
 export function Profile(props: ProfilePropsType) {

@@ -2,9 +2,9 @@ import React from "react";
 import { connect } from "react-redux";
 import { AppStateType } from "../../Redux/redux-store";
 import { unfollowSuccess, getUsers, setCurrentPage, toogleIsFollowingProgress, followSuccess, UserType } from "../../Redux/users-reducer";
-import Preloader from "../Preloader/Preloader";
+import Preloader from "../common/Preloader/Preloader";
 import Users from "./Users";
-import { withAuthRedirect } from "../../HOC/WithAuthRedirect";
+import { withAuthRedirect } from "../../hoc/WithAuthRedirect";
 import { compose } from "redux";
 
 type MapStatePropsType = {

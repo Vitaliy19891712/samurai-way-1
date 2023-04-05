@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { AppStateType } from "../../Redux/redux-store";
 import { getProfile, getStatus, ProfileType, updateStatus } from "../../Redux/profile-reducer";
 import { Redirect, RouteComponentProps, withRouter } from "react-router-dom";
-import { withAuthRedirect } from "../../HOC/WithAuthRedirect";
+import { withAuthRedirect } from "../../hoc/WithAuthRedirect";
 import { compose } from "redux";
 
 export type ProfilePropsType = MapStatePropsType & MapDispatchPropsType & RouteComponentProps<PathParamsType>;

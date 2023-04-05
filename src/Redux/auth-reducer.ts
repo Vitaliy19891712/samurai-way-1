@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { authAPI } from "../API/API";
+import { authAPI } from "../api/API";
 import { AppActionsType, AppThunk } from "./redux-store";
 
 export type ActionUsersReduserType = ReturnType<typeof setAuthUserData>;

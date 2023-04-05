@@ -1,4 +1,4 @@
-import { userAPI } from "../API/API";
+import { userAPI } from "../api/API";
 import { AppThunk } from "./redux-store";
 // VARIABLES
 export const FOLLOW = "FOLLOW";
@@ -148,7 +148,5 @@ export const unfollow = (userId: string): AppThunk => {
     });
   };
 };
-
-
 
 export default usersReducer;

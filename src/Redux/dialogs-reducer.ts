@@ -1,7 +1,6 @@
 export type MessagesDataType = {
   messagesData: Array<MessageType>;
   dialogsData: Array<DialogType>;
-  newMessageBody: string;
 };
 
 export type DialogType = {
@@ -16,18 +15,12 @@ export type MessageType = {
   sender: boolean;
 };
 
-export const UPDATE_NEW_MESSAGE_BODY = "UPDATE-NEW-MESSAGE-BODY";
 export const SEND_MESSAGE = "SEND-MESSAGE";
 
-export const sendMessageCreator = () =>
+export const sendMessageCreator = (message: string) =>
   ({
     type: SEND_MESSAGE,
-  } as const);
-
-export const updateNewMessageBodyCreator = (body: string) =>
-  ({
-    type: UPDATE_NEW_MESSAGE_BODY,
-    body: body,
+    message,
   } as const);
 
 let initialState: MessagesDataType = {
@@ -68,21 +61,16 @@ let initialState: MessagesDataType = {
       foto: "https://bipbap.ru/wp-content/uploads/2022/11/1652235736_31-kartinkin-net-p-prikolnie-kartinki-dlya-stima-33.jpg",
     },
   ],
-  newMessageBody: "",
 };
 
-export type ActionDialogReduserTypes = ReturnType<typeof updateNewMessageBodyCreator> | ReturnType<typeof sendMessageCreator>;
+export type ActionDialogReduserTypes = ReturnType<typeof sendMessageCreator>;
 
 const dialogsReducer = (state: MessagesDataType = initialState, action: ActionDialogReduserTypes): MessagesDataType => {
   switch (action.type) {
-    case UPDATE_NEW_MESSAGE_BODY:
-      return { ...state, newMessageBody: action.body };
-
     case SEND_MESSAGE:
-      let body = state.newMessageBody;
+      let body = action.message;
       return {
         ...state,
-        newMessageBody: "",
         messagesData: [
           ...state.messagesData,
           {

@@ -2,7 +2,7 @@ import { UserType } from "../../Redux/users-reducer";
 import s from "./users.module.css";
 import userPhoto from "./../../assets/images/user.png";
 import { NavLink } from "react-router-dom";
-import { userAPI } from "../../API/API";
+import { userAPI } from "../../api/API";
 
 type PropsUsersType = {
   totalUsersCount: number;
