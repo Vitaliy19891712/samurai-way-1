@@ -102,29 +102,30 @@ const profileReducer = (state: ProfilePageType = initialState, action: ActionPro
   }
 };
 
-export const getProfile = (userID: string): AppThunk => {
-  return (dispatch) => {
+export const getProfile =
+  (userID: string): AppThunk =>
+  (dispatch) => {
     profileAPI.getProfile(userID).then((data) => {
       dispatch(setUserProfile(data));
     });
   };
-};
-export const getStatus = (status: string): AppThunk => {
-  return (dispatch) => {
+
+export const getStatus =
+  (status: string): AppThunk =>
+  (dispatch) => {
     profileAPI.getStatus(status).then((data) => {
       dispatch(setStatus(data));
     });
   };
-};
 
-export const updateStatus = (status: string): AppThunk => {
-  return (dispatch) => {
+export const updateStatus =
+  (status: string): AppThunk =>
+  (dispatch) => {
     profileAPI.updateStatus(status).then((data) => {
       if (data.resultCode === 0) {
         dispatch(setStatus(status));
       }
     });
   };
-};
 
 export default profileReducer;
