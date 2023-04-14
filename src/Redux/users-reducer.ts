@@ -114,7 +114,7 @@ const usersReducer = (state: InitialStateType = initialState, action: ActionUser
 };
 
 // THUNK
-export const getUsers = (currentPage: number, pageSize: number): AppThunk => {
+export const requestUsers = (currentPage: number, pageSize: number): AppThunk => {
   return (dispatch) => {
     dispatch(toogleIsFetching(true));
     userAPI.getUsers(currentPage, pageSize).then((data) => {

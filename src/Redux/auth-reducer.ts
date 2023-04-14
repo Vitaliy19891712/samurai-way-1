@@ -36,15 +36,13 @@ const authReducer = (state: InitialStateType = initialState, action: ActionUsers
   }
 };
 
-export const getAuthUserData = (): AppThunk => {
-  return (dispatch) => {
-    authAPI.me().then((data) => {
+export const getAuthUserData = (): AppThunk<Promise<void>> => (dispatch) => {
+  return authAPI.me().then((data) => {
+    if (data.resultCode === 0) {
       let { id, login, email } = data.data;
-      if (data.resultCode === 0) {
-        dispatch(setAuthUserData(id, login, email, true));
-      }
-    });
-  };
+      dispatch(setAuthUserData(id, login, email, true));
+    }
+  });
 };
 
 export const login = (email: string, password: string, rememberMe: boolean): AppThunk => {
