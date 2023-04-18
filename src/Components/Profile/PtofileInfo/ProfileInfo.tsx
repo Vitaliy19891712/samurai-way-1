@@ -2,6 +2,7 @@ import { ProfileType } from "../../../Redux/profile-reducer";
 import Preloader from "../../common/Preloader/Preloader";
 import s from "./ProfileInfo.module.css";
 import ProfileStatus from "./ProfileStatus";
+import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 type ProfileInfoType = {
   profile: ProfileType;
   status: string;
@@ -29,7 +30,7 @@ export function ProfileInfo(props: ProfileInfoType) {
         alt="Logo"
       /> */}
       {photo}
-      <ProfileStatus status={props.status} updateStatus={props.updateStatus} />
+      <ProfileStatusWithHooks status={props.status} updateStatus={props.updateStatus} />
       <div>My full name: {props.profile.fullName}</div>
       <div>Work: {props.profile.lookingForAJobDescription}</div>
       <div>List contacts:</div>

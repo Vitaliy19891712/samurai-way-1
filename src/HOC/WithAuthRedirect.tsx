@@ -2,6 +2,7 @@ import React, { Component, ComponentType } from "react";
 import { Redirect } from "react-router-dom";
 import { ConnectedComponent, connect } from "react-redux";
 import { AppStateType } from "../Redux/redux-store";
+
 let mapStateToProps = (state: AppStateType): MapStatePropsType => ({
   isAuth: state.auth.isAuth,
 });
@@ -11,8 +12,6 @@ export type MapStatePropsType = {
 };
 
 export function withAuthRedirect<T>(Component: ComponentType<T>) {
-
-
 
   
   const RedirectComponent = (props: MapStatePropsType) => {
