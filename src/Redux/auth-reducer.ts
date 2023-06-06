@@ -36,36 +36,31 @@ const authReducer = (state: InitialStateType = initialState, action: ActionUsers
   }
 };
 
-export const getAuthUserData = (): AppThunk<Promise<void>> => (dispatch) => {
-  return authAPI.me().then((data) => {
+export const getAuthUserData = (): AppThunk<Promise<void>> => async (dispatch) => {
+  const data = await authAPI.me();
+  if (data.resultCode === 0) {
+    let { id, login, email } = data.data;
+    dispatch(setAuthUserData(id, login, email, true));
+  }
+};
+
+export const login =
+  (email: string, password: string, rememberMe: boolean): AppThunk =>
+  async (dispatch) => {
+    let data = await authAPI.login(email, password, rememberMe);
     if (data.resultCode === 0) {
-      let { id, login, email } = data.data;
-      dispatch(setAuthUserData(id, login, email, true));
+      dispatch(getAuthUserData());
+    } else {
+      let message = data.messages.length > 0 ? data.messages[0] : "Some error";
+      dispatch(stopSubmit("login", { _error: message }));
     }
-  });
-};
-
-export const login = (email: string, password: string, rememberMe: boolean): AppThunk => {
-  return (dispatch) => {
-    authAPI.login(email, password, rememberMe).then((data) => {
-      if (data.resultCode === 0) {
-        dispatch(getAuthUserData());
-      } else {
-        let message = data.messages.length > 0 ? data.messages[0] : "Some error";
-        dispatch(stopSubmit("login", { _error: message }));
-      }
-    });
   };
-};
 
-export const logout = (): AppThunk => {
-  return (dispatch) => {
-    authAPI.logout().then((data) => {
-      if (data.resultCode === 0) {
-        dispatch(setAuthUserData(null, null, null, false));
-      }
-    });
-  };
+export const logout = (): AppThunk => async (dispatch) => {
+  let data = await authAPI.logout();
+  if (data.resultCode === 0) {
+    dispatch(setAuthUserData(null, null, null, false));
+  }
 };
 
 export default authReducer;

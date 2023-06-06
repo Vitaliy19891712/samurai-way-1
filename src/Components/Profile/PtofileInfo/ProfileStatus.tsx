@@ -2,7 +2,7 @@ import React, { ChangeEvent, useEffect, useState } from "react";
 
 type PropsProfileType = {
   status: string;
-  updateStatus: (status: string) => void;
+  updateStatus?: (status: string) => void;
 };
 
 class ProfileStatus extends React.Component<PropsProfileType> {
@@ -16,7 +16,7 @@ class ProfileStatus extends React.Component<PropsProfileType> {
 
   activateUneditMode = () => {
     this.setState({ editMode: false });
-    this.props.updateStatus(this.state.status);
+    this.props.updateStatus && this.props.updateStatus(this.state.status);
   };
 
   onStatusChange = (e: ChangeEvent<HTMLInputElement>) => {

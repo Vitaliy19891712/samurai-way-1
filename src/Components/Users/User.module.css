@@ -1,0 +1,27 @@
+* {
+  box-sizing: border-box;
+}
+
+.userPhoto {
+  width: 70px;
+  height: 70px;
+}
+.photo {
+  text-align: center;
+}
+.text {
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  background-color: brown;
+  width: 400px;
+}
+.flex {
+  display: flex;
+  margin: 15px;
+}
+.flexCol {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}

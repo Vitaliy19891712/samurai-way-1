@@ -14,7 +14,6 @@ export function Profile(props: ProfilePropsType) {
   return (
     <div className={s.item}>
       <ProfileInfo profile={props.profile} status={props.status} updateStatus={props.updateStatus} />
-
       <MyPostsContainer />
     </div>
   );

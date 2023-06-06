@@ -10,14 +10,14 @@ export type ProfilePageType = {
 export type ProfileType = {
   aboutMe: number;
   contacts: {
-    facebook: string;
-    website: string;
-    vk: string;
-    twitter: string;
-    instagram: string;
-    youtube: string;
-    github: string;
-    mainLink: string;
+    [facebook:string]: string | null;
+    website: string | null;
+    vk: string | null;
+    twitter: string | null;
+    instagram: string | null;
+    youtube: string | null;
+    github: string | null;
+    mainLink: string | null;
   };
   lookingForAJob: boolean;
   lookingForAJobDescription: string;
@@ -38,6 +38,13 @@ export type PostType = {
 export const ADD_POST = "ADD-POST";
 export const SET_USER_PROFILE = "SET_USER_PROFILE";
 export const SET_STATUS = "SET_STATUS";
+export const DELETE_POST = "DELETE_POST";
+
+export const deletePostCreator = (postId: string) =>
+  ({
+    type: DELETE_POST,
+    postId,
+  } as const);
 
 export const addPostCreator = (message: string) =>
   ({
@@ -70,7 +77,11 @@ const initialState: ProfilePageType = {
   status: "",
 };
 
-export type ActionProfileReducerTypes = ReturnType<typeof addPostCreator> | ReturnType<typeof setStatus> | ReturnType<typeof setUserProfile>;
+export type ActionProfileReducerTypes =
+  | ReturnType<typeof deletePostCreator>
+  | ReturnType<typeof addPostCreator>
+  | ReturnType<typeof setStatus>
+  | ReturnType<typeof setUserProfile>;
 
 const profileReducer = (state: ProfilePageType = initialState, action: ActionProfileReducerTypes): ProfilePageType => {
   switch (action.type) {
@@ -96,7 +107,11 @@ const profileReducer = (state: ProfilePageType = initialState, action: ActionPro
         ...state,
         status: action.status,
       };
-
+    case DELETE_POST:
+      return {
+        ...state,
+        posts: state.posts.filter((p) => p.id !== action.postId),
+      };
     default:
       return state;
   }
@@ -104,28 +119,25 @@ const profileReducer = (state: ProfilePageType = initialState, action: ActionPro
 
 export const getProfile =
   (userID: string): AppThunk =>
-  (dispatch) => {
-    profileAPI.getProfile(userID).then((data) => {
-      dispatch(setUserProfile(data));
-    });
+  async (dispatch) => {
+    let data = await profileAPI.getProfile(userID);
+    dispatch(setUserProfile(data));
   };
 
 export const getStatus =
   (status: string): AppThunk =>
-  (dispatch) => {
-    profileAPI.getStatus(status).then((data) => {
-      dispatch(setStatus(data));
-    });
+  async (dispatch) => {
+    let data = await profileAPI.getStatus(status);
+    dispatch(setStatus(data));
   };
 
 export const updateStatus =
   (status: string): AppThunk =>
-  (dispatch) => {
-    profileAPI.updateStatus(status).then((data) => {
-      if (data.resultCode === 0) {
-        dispatch(setStatus(status));
-      }
-    });
+  async (dispatch) => {
+    let data = await profileAPI.updateStatus(status);
+    if (data.resultCode === 0) {
+      dispatch(setStatus(status));
+    }
   };
 
 export default profileReducer;

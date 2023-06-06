@@ -1,3 +1,4 @@
+import { Field } from "redux-form";
 import s from "./FormsControls.module.css";
 
 export const TextArea: React.FC<any> = (props) => {
@@ -18,12 +19,25 @@ export const Input: React.FC<any> = (props) => {
   );
 };
 
-export const FormsControl: React.FC<any> = ({ input, meta, child, ...props }) => {
-  const hasError = meta.touched && meta.error;
+export const FormsControl: React.FC<any> = ({ meta: { touched, error }, children }) => {
+  const hasError = touched && error;
   return (
     <div className={s.formControl + " " + (hasError ? s.error : "")}>
-      <div>{props.children}</div>
-      {hasError && <span>{meta.error}</span>}
+      <div>{children}</div>
+      {hasError && <span>{error}</span>}
     </div>
   );
 };
+
+export const createField = (
+  name: string,
+  component: React.FC<any>,
+  placeholder: string | null,
+  validate: ((value: string) => "Required" | undefined)[],
+  props: any,
+  text = ""
+) => (
+  <div>
+    <Field name={name} component={component} placeholder={placeholder} validate={validate} {...props} /> {text}
+  </div>
+);
