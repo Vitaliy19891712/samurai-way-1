@@ -16,7 +16,7 @@ type PropsUsersType = {
 const Users = ({ totalUsersCount, pageSize, currentPage, onPageChanged, users, unfollow, follow, followingInProgress }: PropsUsersType) => {
   return (
     <div>
-      <Paginator totalUsersCount={totalUsersCount} pageSize={pageSize} currentPage={currentPage} onPageChanged={onPageChanged} />
+      <Paginator portionSize={10} totalItemsCount={totalUsersCount} pageSize={pageSize} currentPage={currentPage} onPageChanged={onPageChanged} />
       {users.map((user) => (
         <User key={user.id} user={user} unfollow={unfollow} follow={follow} followingInProgress={followingInProgress} />
       ))}
