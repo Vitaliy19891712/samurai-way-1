@@ -36,7 +36,7 @@ const Login = (props: LoginPropsType) => {
 const LoginForm = ({ handleSubmit, error, ...restProps }: InjectedFormProps<LoginFormDataType>) => {
   return (
     <form onSubmit={handleSubmit}>
-      {createField("email", Input, "Login", [required], null)}
+      {createField("email", Input, "Login", [required])}
       {createField("password", Input, "Password", [required], { type: "password" })}
       {createField("rememberMe", Input, null, [], { type: "checkbox" }, "Remember me")}
       {error && <div className={s.formSummaryError}>{error}</div>}

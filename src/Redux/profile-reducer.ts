@@ -1,16 +1,16 @@
-import { profileAPI } from "../api/API";
+import { UpdateProfileType, profileAPI } from "../api/API";
 import { AppThunk } from "./redux-store";
 
 export type ProfilePageType = {
   posts: Array<PostType>;
-  profile: ProfileType;
+  profile: any;
   status: string;
 };
 
 export type ProfileType = {
-  aboutMe: number;
+  aboutMe: string;
   contacts: {
-    [facebook:string]: string | null;
+    [facebook: string]: string | null;
     website: string | null;
     vk: string | null;
     twitter: string | null;
@@ -39,11 +39,18 @@ export const ADD_POST = "ADD-POST";
 export const SET_USER_PROFILE = "SET_USER_PROFILE";
 export const SET_STATUS = "SET_STATUS";
 export const DELETE_POST = "DELETE_POST";
+export const SAVE_PHOTO_SUCCESS = "SAVE_PHOTO_SUCCESS";
 
 export const deletePostCreator = (postId: string) =>
   ({
     type: DELETE_POST,
     postId,
+  } as const);
+
+export const savePhotoSuccess = (photos: { small: string; large: string }) =>
+  ({
+    type: SAVE_PHOTO_SUCCESS,
+    photos,
   } as const);
 
 export const addPostCreator = (message: string) =>
@@ -81,6 +88,7 @@ export type ActionProfileReducerTypes =
   | ReturnType<typeof deletePostCreator>
   | ReturnType<typeof addPostCreator>
   | ReturnType<typeof setStatus>
+  | ReturnType<typeof savePhotoSuccess>
   | ReturnType<typeof setUserProfile>;
 
 const profileReducer = (state: ProfilePageType = initialState, action: ActionProfileReducerTypes): ProfilePageType => {
@@ -112,6 +120,11 @@ const profileReducer = (state: ProfilePageType = initialState, action: ActionPro
         ...state,
         posts: state.posts.filter((p) => p.id !== action.postId),
       };
+    case SAVE_PHOTO_SUCCESS:
+      return {
+        ...state,
+        profile: { ...state.profile, photos: action.photos },
+      };
     default:
       return state;
   }
@@ -140,4 +153,21 @@ export const updateStatus =
     }
   };
 
+export const savePhoto =
+  (file: File): AppThunk =>
+  async (dispatch) => {
+    let data = await profileAPI.savePhoto(file);
+    if (data.resultCode === 0) {
+      dispatch(savePhotoSuccess(data.data.photos));
+    }
+  };
+export const saveProfile =
+  (profile: UpdateProfileType): AppThunk =>
+  async (dispatch) => {
+    let data = await profileAPI.saveProfile(profile);
+    debugger;
+    if (data.resultCode === 0) {
+      dispatch(savePhotoSuccess(data.data.photos));
+    }
+  };
 export default profileReducer;

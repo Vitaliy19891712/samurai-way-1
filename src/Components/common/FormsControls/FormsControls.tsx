@@ -34,7 +34,7 @@ export const createField = (
   component: React.FC<any>,
   placeholder: string | null,
   validate: ((value: string) => "Required" | undefined)[],
-  props: any,
+  props = {},
   text = ""
 ) => (
   <div>

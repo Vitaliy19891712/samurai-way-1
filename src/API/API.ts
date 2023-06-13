@@ -1,4 +1,5 @@
 import axios from "axios";
+import { ProfileType } from "../Redux/profile-reducer";
 //
 const instanse = axios.create({
   withCredentials: true,
@@ -30,16 +31,31 @@ export const profileAPI = {
   updateStatus(status: string) {
     return instanse.put(`profile/status/`, { status: status }).then((response) => response.data);
   },
+  savePhoto(photo: File) {
+    const formData = new FormData();
+    formData.append("image", photo);
+    return instanse.put(`profile/photo/`, formData, { headers: { "Content-Type": "multipart/from-data" } }).then((response) => response.data);
+  },
+  saveProfile(profile: UpdateProfileType) {
+    return instanse.put(`profile`, profile).then((response) => response.data);
+  },
 };
 
 export const authAPI = {
   me() {
     return instanse.get(`auth/me`).then((response) => response.data);
   },
-  login(email: string, password: string, rememberMe: boolean = false,) {
+  login(email: string, password: string, rememberMe: boolean = false) {
     return instanse.post(`auth/login`, { email, password, rememberMe }).then((response) => response.data);
   },
   logout() {
     return instanse.delete(`auth/login`).then((response) => response.data);
   },
+};
+
+export type UpdateProfileType = {
+  fullName: string;
+  aboutMe: string;
+  lookingForAJob: boolean;
+  lookingForAJobDescription: string;
 };
