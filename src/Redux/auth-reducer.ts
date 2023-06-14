@@ -10,7 +10,7 @@ export const setAuthUserData = (id: number | null, login: string | null, email: 
   ({ type: SET_AUTH_USER_DATA, payload: { id, login, email, isAuth } } as const);
 
 export type InitialStateType = {
-  id: number | null;
+  id: string | null;
   login: string | null;
   email: string | null;
   isAuth: boolean;

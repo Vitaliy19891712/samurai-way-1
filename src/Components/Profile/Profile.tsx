@@ -3,7 +3,7 @@ import s from "./Profile.module.css";
 import { MyPostsContainer } from "./Myposts/MyPostsContainer";
 import { ProfileType } from "../../Redux/profile-reducer";
 import { Redirect } from "react-router-dom";
-import { EditProfileFormDataType } from './PtofileInfo/ProfileDataForm';
+import { EditProfileFormDataType } from "./PtofileInfo/ProfileDataForm";
 
 type ProfilePropsType = {
   profile: ProfileType;

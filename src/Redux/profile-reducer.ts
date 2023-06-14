@@ -1,3 +1,4 @@
+import { stopSubmit } from "redux-form";
 import { UpdateProfileType, profileAPI } from "../api/API";
 import { AppThunk } from "./redux-store";
 
@@ -163,11 +164,14 @@ export const savePhoto =
   };
 export const saveProfile =
   (profile: UpdateProfileType): AppThunk =>
-  async (dispatch) => {
-    let data = await profileAPI.saveProfile(profile);
-    debugger;
-    if (data.resultCode === 0) {
-      dispatch(savePhotoSuccess(data.data.photos));
+  async (dispatch, getState) => {
+    const userId = getState().auth.id;
+    const data = await profileAPI.saveProfile(profile);
+    if (data.resultCode === 0 && userId) {
+      dispatch(getProfile(userId));
+    } else {
+      dispatch(stopSubmit("editProfile", { _error: data.messages[0] }));
+      return Promise.reject(data.messages[0]);
     }
   };
 export default profileReducer;

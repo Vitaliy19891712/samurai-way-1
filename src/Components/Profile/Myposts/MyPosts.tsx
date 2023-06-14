@@ -10,8 +10,6 @@ type MyPostPropsType = {
 };
 
 export const MyPosts = React.memo((props: MyPostPropsType) => {
-  console.log("my post");
-
   let postDate = props.profilePage.map((pd) => <Post key={pd.id} message={pd.message} likeCount={pd.likeCount} id={pd.id} />);
 
   return (

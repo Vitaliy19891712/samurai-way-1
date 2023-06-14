@@ -1,22 +1,38 @@
+import React from "react";
 import { ProfileType } from "../../../Redux/profile-reducer";
 import { Input, TextArea, createField } from "../../common/FormsControls/FormsControls";
-import { Contacts, ProfileDataPropsType } from "./ProfileInfo";
-import { Field, InjectedFormProps, reduxForm } from "redux-form";
+import { InjectedFormProps, reduxForm } from "redux-form";
 
 export type EditProfileFormDataType = {
   fullName: string;
   lookingForAJob: boolean;
   lookingForAJobDescription: string;
   aboutMe: string;
+  contacts: ContactsType;
 };
+type ContactsType = {
+  [facebook: string]: string | null;
+  website: string | null;
+  vk: string | null;
+  twitter: string | null;
+  instagram: string | null;
+  youtube: string | null;
+  github: string | null;
+  mainLink: string | null;
+};
+const ProfileDataForm: React.FC<InjectedFormProps<EditProfileFormDataType, { profile: ProfileType }> & { profile: ProfileType }> = ({
+  error,
+  handleSubmit,
+  profile,
+}) => {
+  console.log(profile?.contacts);
 
-const ProfileDataForm = (props: InjectedFormProps<EditProfileFormDataType>) => {
   return (
-    <form onSubmit={props.handleSubmit}>
+    <form onSubmit={handleSubmit}>
       <div>
         <button>save</button>
       </div>
-
+      {error && <div>{error}</div>}
       <div>
         <b>My full name: </b> {createField("fullName", Input, "Full name", [])}
       </div>
@@ -29,10 +45,13 @@ const ProfileDataForm = (props: InjectedFormProps<EditProfileFormDataType>) => {
       </div>
       <div>
         <b>Contacts: </b>
-        {/* {props.profile &&
-          Object.keys(props.profile.contacts).map((key) => {
-            <Contacts contactTitle={key} contactValue={props.profile?.contacts[key]} />;
-          })} */}
+
+        {profile?.contacts &&
+          Object.keys(profile.contacts).map((key) => {
+            <div key={key}>
+              <b>{key}:</b> {createField("contacts." + key, Input, key, [])}
+            </div>;
+          })}
       </div>
       <div>
         <b>About me: </b>
@@ -42,4 +61,4 @@ const ProfileDataForm = (props: InjectedFormProps<EditProfileFormDataType>) => {
   );
 };
 
-export const ProfileDataFormReduxForm = reduxForm<EditProfileFormDataType>({ form: "editProfile" })(ProfileDataForm);
+export const ProfileDataFormReduxForm = reduxForm<EditProfileFormDataType, { profile: ProfileType }>({ form: "editProfile" })(ProfileDataForm);

@@ -33,8 +33,7 @@ export function ProfileInfo(props: ProfileInfoType) {
     }
   };
   const onSibmit = (formData: EditProfileFormDataType) => {
-    // debugger;
-    props.saveProfile({ ...formData });
+    props.saveProfile(formData).then(() => setEditMode(false));
   };
   return (
     <div>
@@ -43,7 +42,7 @@ export function ProfileInfo(props: ProfileInfoType) {
 
       <ProfileStatusWithHooks status={props.status} updateStatus={props.updateStatus} />
       {editMode ? (
-        <ProfileDataFormReduxForm initialValues={props.profile} onSubmit={onSibmit} />
+        <ProfileDataFormReduxForm initialValues={props.profile} onSubmit={onSibmit} profile={props.profile} />
       ) : (
         <ProfileData goToEditMide={() => setEditMode(true)} profile={props.profile} isOwner={props.isOwner} />
       )}

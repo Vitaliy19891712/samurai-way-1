@@ -11,7 +11,7 @@ export type ProfilePropsType = MapStatePropsType & MapDispatchPropsType & RouteC
 export type MapStatePropsType = {
   profile: ProfileType;
   status: string;
-  autorizedUserId: number | null;
+  autorizedUserId: string | null;
   isAuth: boolean;
 };
 export type MapDispatchPropsType = {
