@@ -18,7 +18,7 @@ export function Profile(props: ProfilePropsType) {
   return (
     <div className={s.item}>
       <ProfileInfo
-        saveProfile={props.saveProfile}
+        saveProfile={props.saveProfile} 
         savePhoto={props.savePhoto}
         isOwner={props.isOwner}
         profile={props.profile}

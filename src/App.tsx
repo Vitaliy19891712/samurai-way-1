@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, withRouter } from "react-router-dom";
+import { BrowserRouter, Redirect, Route, withRouter } from "react-router-dom";
 import "./App.css";
 import HeaderContainer from "./Components/Header/HeaderContainer";
 import Login from "./Components/Login/Login";
@@ -38,6 +38,12 @@ class App extends React.Component<AppPropsType> {
         <HeaderContainer />
         <Navbar />
         <div className="app-wrapper-content">
+          <Route
+            path="/"
+            render={() => {
+              return <Redirect to={"/profile/"} />;
+            }}
+          />
           <Route path="/profile/:userId?" render={withSuspence(ProfileContainer)} />
           <Route path="/dialogs" render={withSuspence(DialogsContainer)} />
           <Route path="/users" render={withSuspence(UsersContainer)} />

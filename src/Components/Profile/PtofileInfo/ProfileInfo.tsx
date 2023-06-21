@@ -33,7 +33,8 @@ export function ProfileInfo(props: ProfileInfoType) {
     }
   };
   const onSibmit = (formData: EditProfileFormDataType) => {
-    props.saveProfile(formData).then(() => setEditMode(false));
+    props.saveProfile(formData);
+    setEditMode(false);
   };
   return (
     <div>
